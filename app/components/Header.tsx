@@ -1,9 +1,12 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Icon } from "@iconify/react";
+import { Icon, loadIcon } from "@iconify/react";
 
 export default function Header() {
+  loadIcon("meteor-icons:share");
+
   return (
     <header className="w-full flex justify-between py-6 items-center font-[family-name:var(--font-work-sans)] border-b border-b-base-200">
       <div className="relative w-[152px] sm:w-[177px] h-[40px]">

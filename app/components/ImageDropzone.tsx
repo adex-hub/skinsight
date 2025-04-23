@@ -1,9 +1,10 @@
 "use client";
-import { Icon } from "@iconify/react";
+import { Icon, loadIcon } from "@iconify/react";
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
 export default function ImageDropzone() {
+  loadIcon("mage:image-upload");
   const onDrop = useCallback((acceptedFiles: File[]) => {
     // Do something with the files
   }, []);

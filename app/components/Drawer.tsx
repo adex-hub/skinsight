@@ -1,7 +1,10 @@
+"use client";
 import React from "react";
-import { Icon } from "@iconify/react";
+import { Icon, loadIcon } from "@iconify/react";
 
 export default function Drawer() {
+  loadIcon("simple-line-icons:close");
+
   return (
     <div className="drawer-side">
       <label
