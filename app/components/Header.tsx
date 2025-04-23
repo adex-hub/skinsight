@@ -10,7 +10,7 @@ export default function Header() {
   return (
     <header className="w-full flex justify-between py-6 items-center font-[family-name:var(--font-work-sans)] border-b border-b-base-200">
       <div className="relative w-[152px] sm:w-[177px] h-[40px]">
-        <Image src="/skinsight-logo.svg" fill alt="logo" />
+        <Image src="/skinsight-logo.svg" fill alt="logo" priority />
       </div>
 
       <nav className="hidden sm:flex gap-5 items-center">
