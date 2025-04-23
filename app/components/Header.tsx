@@ -19,11 +19,15 @@ export default function Header() {
         <Icon icon="meteor-icons:share" /> Share
       </button>
 
-      <div className="block space-y-[5px] sm:hidden">
+      <label
+        role="button"
+        htmlFor="right-drawer"
+        className="block space-y-[5px] sm:hidden"
+      >
         <div className="w-[30px] h-[3px] bg-accent rounded-full"></div>
         <div className="w-[30px] h-[3px] bg-accent rounded-full"></div>
         <div className="w-[30px] h-[3px] bg-accent rounded-full"></div>
-      </div>
+      </label>
     </header>
   );
 }

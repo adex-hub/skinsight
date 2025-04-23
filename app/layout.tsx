@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, EB_Garamond, Work_Sans } from "next/font/google";
 import "./globals.css";
+import Header from "./components/Header";
+import Drawer from "./components/Drawer";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -38,9 +40,14 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="caramellatte">
       <body
-        className={`${ebGaramond.variable} ${workSans.variable} antialiased max-w-[90%] xl:max-w-[1223px] w-full mx-auto overflow-x-hidden`}
+        className={`${ebGaramond.variable} ${workSans.variable} antialiased max-w-[90%] xl:max-w-[1223px] w-full mx-auto overflow-x-hidden drawer drawer-end`}
       >
-        {children}
+        <input id="right-drawer" type="checkbox" className="drawer-toggle" />
+        <div className="drawer-content">
+          <Header />
+          {children}
+        </div>
+        <Drawer />
       </body>
     </html>
   );

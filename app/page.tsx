@@ -5,9 +5,7 @@ import ImageDropzone from "./components/ImageDropzone";
 export default function Home() {
   return (
     <>
-      <Header />
       <main>
-        {/* The size of this h1 is very temporary as I am still gonna use font-clamp to adjust it as needed. */}
         <h1 className="text-[clamp(1.5rem,4vw+1rem,4.5rem)] font-medium text-center mt-[clamp(2rem,8vh,13vh)] font-[family-name:var(--font-eb-garamond)]">
           {/* Understand your skin better with AI */}
           Gain insight into your skin
@@ -17,9 +15,9 @@ export default function Home() {
           any conditions. You'll receive a detailed report along with
           recommendations for treatments and medications.
         </p>
-      </main>
 
-      <ImageDropzone />
+        <ImageDropzone />
+      </main>
     </>
   );
 }
