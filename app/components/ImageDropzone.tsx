@@ -57,13 +57,10 @@ export default function ImageDropzone() {
     formData.append("file", file);
 
     try {
-      const response = await fetch(
-        "https://skinsight-ai.onrender.com/predict",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch("http://127.0.0.1:8000/predict", {
+        method: "POST",
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -76,6 +73,13 @@ export default function ImageDropzone() {
     } finally {
       setIsAnalyzing(false);
     }
+  };
+
+  const basic = {
+    confidence: "0.99",
+    prediction: "Eczema",
+    recommedation:
+      "Use a moisturizer to keep the skin hydrated. Avoid scratching the affected area.",
   };
 
   return (
