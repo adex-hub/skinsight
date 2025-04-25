@@ -3,12 +3,15 @@ import { Icon, loadIcons } from "@iconify/react";
 import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { DNA } from "react-loader-spinner";
+import { useAnalysis } from "../context/AnalysisContext";
 
 export default function ImageDropzone() {
   loadIcons(["mage:image", "mage:image-upload"]);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
+  // const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
+
+  const { isAnalyzing, setIsAnalyzing, setAnalysisResult } = useAnalysis(); // Assuming you have a context or state management for this
 
   // I'd handle error states such that when a user's image is too large or not the right format, an error message is displayed. This could be done using a state variable to track the error and conditionally render an error message in the UI.
 
@@ -65,9 +68,8 @@ export default function ImageDropzone() {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-
       const data = await response.json();
-      console.log(data);
+      setAnalysisResult(data);
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -85,7 +87,7 @@ export default function ImageDropzone() {
   return (
     <div
       {...getRootProps()}
-      className={`max-w-[740px] w-full mx-auto mt-10 p-6 border-2 border-neutral text-neutral border-dashed rounded-3xl ${
+      className={`max-w-[740px] w-full mx-auto my-10 p-6 border-2 border-neutral text-neutral border-dashed rounded-3xl ${
         isDragActive ? "bg-base-300" : "bg-base-200"
       } transition-colors duration-200 h-96 flex justify-center items-center font-[family-name:var(--font-work-sans)]`}
     >

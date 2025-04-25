@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, EB_Garamond, Work_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
+import { AnalysisProvider } from "./context/AnalysisContext";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -45,7 +46,7 @@ export default function RootLayout({
         <input id="right-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           <Header />
-          {children}
+          <AnalysisProvider>{children}</AnalysisProvider>
         </div>
         <Drawer />
       </body>
