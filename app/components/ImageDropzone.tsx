@@ -2,11 +2,13 @@
 import { Icon, loadIcons } from "@iconify/react";
 import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
+import { DNA } from "react-loader-spinner";
 
 export default function ImageDropzone() {
   loadIcons(["mage:image", "mage:image-upload"]);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
 
   // I'd handle error states such that when a user's image is too large or not the right format, an error message is displayed. This could be done using a state variable to track the error and conditionally render an error message in the UI.
 
@@ -46,6 +48,36 @@ export default function ImageDropzone() {
     maxFiles: 1,
   });
 
+  const handleAnalysis = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsAnalyzing(true);
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch(
+        "https://skinsight-ai.onrender.com/predict",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
   return (
     <div
       {...getRootProps()}
@@ -58,24 +90,51 @@ export default function ImageDropzone() {
       {preview ? (
         <div className="flex flex-col items-center gap-y-4">
           <div className="relative w-full max-h-64 flex items-center justify-center">
+            {isAnalyzing && (
+              <div className="absolute flex justify-center items-center z-10 rounded-lg inset-0 bg-base-200/30">
+                <DNA
+                  visible={true}
+                  height="80"
+                  width="80"
+                  ariaLabel="dna-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="dna-wrapper"
+                />
+              </div>
+            )}
             <img
               src={preview}
               alt="Preview"
               className="max-h-64 max-w-full object-contain rounded-lg"
             />
           </div>
-          <div className="flex gap-x-3">
+          <div className="flex gap-x-3 max-w-[400px]">
+            {!isAnalyzing && (
+              <button
+                className="btn btn-neutral"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFile(null);
+                  setPreview(null);
+                }}
+              >
+                Remove
+              </button>
+            )}
             <button
-              className="btn btn-neutral"
-              onClick={(e) => {
-                e.stopPropagation();
-                setFile(null);
-                setPreview(null);
-              }}
+              className={`btn btn-primary ${isAnalyzing && "w-full"}`}
+              onClick={handleAnalysis}
+              disabled={isAnalyzing}
             >
-              Remove
+              {isAnalyzing ? (
+                <>
+                  <span className="loading loading-infinity loading-sm" />
+                  Analyzing...
+                </>
+              ) : (
+                "Analyze"
+              )}
             </button>
-            <button className="btn btn-primary">Analyze Image</button>
           </div>
         </div>
       ) : (
