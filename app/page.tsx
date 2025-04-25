@@ -1,3 +1,4 @@
+import DiagnosisCard from "./components/DiagnosisCard";
 import Header from "./components/Header";
 import ImageDropzone from "./components/ImageDropzone";
 
@@ -17,6 +18,8 @@ export default function Home() {
         </p>
 
         <ImageDropzone />
+
+        <DiagnosisCard />
       </main>
     </>
   );
